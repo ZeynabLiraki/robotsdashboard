@@ -1,24 +1,12 @@
 import { styled } from "@mui/material/styles";
-import { AppBar, Drawer, ListItemButton, Box } from "@mui/material";
+import { ListItemButton } from "@mui/material";
+import MuiAppBar from "@mui/material/AppBar";
+import IconButton from "@mui/material/IconButton";
+import Box from "@mui/material/Box";
+import MuiDrawer from "@mui/material/Drawer";
+import { Theme } from "@mui/material";
 
 export const drawerWidth = 250;
-
-export const StyledAppBar = styled(AppBar)(({ theme }) => ({
-  zIndex: theme.zIndex.drawer + 1,
-  backgroundColor: "#1f2d3d",
-}));
-
-export const StyledDrawer = styled(Drawer)(({ theme }) => ({
-  width: drawerWidth,
-  flexShrink: 0,
-  "& .MuiDrawer-paper": {
-    width: drawerWidth,
-    backgroundColor: "#8e9499",
-    color: theme.palette.common.white,
-    boxSizing: "border-box",
-    top: 64,
-  },
-}));
 
 export const StyledListItemButton = styled(ListItemButton, {
   shouldForwardProp: (prop) => prop !== "selected",
@@ -32,14 +20,39 @@ export const StyledListItemButton = styled(ListItemButton, {
   },
 }));
 
-export const ModalBox = styled(Box)(({ theme }) => ({
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  backgroundColor: theme.palette.background.paper,
-  boxShadow: theme.shadows[24],
-  padding: theme.spacing(4),
-  width: 300,
-  outline: "none",
+export const StyledAppBar = styled(MuiAppBar)(({ theme }) => ({
+  zIndex: theme.zIndex.drawer + 1,
+  backgroundColor: "#1f2d3d",
 }));
+
+export const StyledIconButton = styled(IconButton)(({ theme }) => ({
+  marginRight: theme.spacing(2),
+}));
+
+export const FlexGrowBox = styled(Box)({
+  flexGrow: 1,
+});
+
+export const StyledDrawer = styled(MuiDrawer)(({ theme }) => ({
+  width: drawerWidth,
+  flexShrink: 0,
+  "& .MuiDrawer-paper": {
+    width: drawerWidth,
+    boxSizing: "border-box",
+    top: 64,
+    backgroundColor: "#8e9499",
+    color: theme.palette.common.white,
+  },
+}));
+
+
+export const mainBoxSx = (theme: Theme, isMobile: boolean, drawerOpen: boolean, drawerWidth: number) => ({
+  flexGrow: 1,
+  p: 3,
+  mt: "64px",
+  ml: !isMobile && drawerOpen ? `${drawerWidth}px` : 0,
+  transition: theme.transitions.create("margin", {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+});

@@ -1,19 +1,23 @@
-import  { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, Outlet } from "react-router-dom";
-import { Box } from "@mui/material";
+import { Box, useTheme, useMediaQuery } from "@mui/material";
 
 import Drawer from "./Drawer";
 import AppBar from "./AppBar";
-
-const drawerWidth = 270;
+import { drawerWidth } from "./AppLayout.styles";
+import { mainBoxSx } from "./AppLayout.styles";
 
 const AppLayout: React.FC = () => {
   const navigate = useNavigate();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
   const [userInfo, setUserInfo] = useState<{
     firstName?: string;
     lastName?: string;
-  } | null>({ firstName: "Zeynab", lastName: "Liraki" });
+  } | null>(null);
   const [selectedKey, setSelectedKey] = useState<string>("/");
+  const [drawerOpen, setDrawerOpen] = useState<boolean>(!isMobile);
 
   useEffect(() => {
     try {
@@ -22,31 +26,33 @@ const AppLayout: React.FC = () => {
     } catch {}
   }, []);
 
+  useEffect(() => {
+    setDrawerOpen(!isMobile);
+  }, [isMobile]);
+
   const handleNavigate = (path: string) => {
     setSelectedKey(path);
     navigate(path);
   };
 
-  const menuItems = [
-    {
-      key: "/",
-      label: "Card List",
-    },
-  ];
+  const menuItems = [{ key: "/", label: "Card List" }];
 
   return (
     <>
-      <AppBar userInfo={userInfo} />
+      <AppBar userInfo={userInfo} onMenuClick={() => setDrawerOpen(true)} />
 
       <Drawer
         menuItems={menuItems}
         selectedKey={selectedKey}
-        onNavigate={() => handleNavigate}
+        onNavigate={handleNavigate}
+        open={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+        variant={isMobile ? "temporary" : "persistent"}
       />
 
       <Box
         component="main"
-        sx={{ flexGrow: 1, p: 3, ml: `${drawerWidth}px`, mt: "64px" }}
+        sx={mainBoxSx(theme, isMobile, drawerOpen, drawerWidth)}
       >
         <Outlet />
       </Box>

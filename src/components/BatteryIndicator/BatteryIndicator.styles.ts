@@ -16,11 +16,11 @@ export const BatteryBody = styled(Box)`
   background-color: white;
 `;
 
-export const BatteryFill = styled(Box)<{ fillColor: string; level: number }>`
+export const BatteryFill = styled(Box)<{ fillcolor: string; level: number }>`
   position: absolute;
   width: ${({ level }) => `${level}%`};
   height: 100%;
-  background-color: ${({ fillColor }) => fillColor};
+  background-color: ${({ fillcolor }) => fillcolor};
   top: 0;
   left: 0;
   transition: width 0.3s ease-in-out;

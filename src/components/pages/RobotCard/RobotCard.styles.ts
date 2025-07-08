@@ -106,7 +106,8 @@ export const RoboCard = styled(Box)`
 `;
 
 export const HeaderTypography = styled(Typography)`
-fontWeight: 700`
+  fontweight: 700;
+`;
 
 export const StatusIconImg = styled.img`
   margin-right: 10px;

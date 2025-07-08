@@ -16,9 +16,7 @@ const getBatteryColor = (level: number): string => {
   return "#20DD20";
 };
 
-const BatteryIndicator: React.FC<BatteryIndicatorProps> = ({
-  level,
-}) => {
+const BatteryIndicator: React.FC<BatteryIndicatorProps> = ({ level }) => {
   const clampedLevel = Math.min(100, Math.max(0, level));
   const batteryColor = getBatteryColor(clampedLevel);
   const percentageText = `${clampedLevel}%`;
@@ -27,7 +25,7 @@ const BatteryIndicator: React.FC<BatteryIndicatorProps> = ({
     <div>
       <BatteryContainer>
         <BatteryBody>
-          <BatteryFill fillColor={batteryColor} level={clampedLevel} />
+          <BatteryFill fillcolor={batteryColor} level={clampedLevel} />
 
           <BatteryText $color="black" $clipInset={`0 0 0 ${clampedLevel}%`}>
             {percentageText}
